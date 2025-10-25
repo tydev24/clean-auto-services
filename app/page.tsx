@@ -1,9 +1,10 @@
 "use client"
 
 import type React from "react"
+import { useState } from "react"
 
 import Image from "next/image"
-import { Car, MapPin, Phone, Check, Sparkles, Shield, Crown, Mail, Clock, Star, Instagram } from "lucide-react"
+import { Car, MapPin, Phone, Check, Sparkles, Shield, Crown, Mail, Clock, Star, Instagram, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -11,30 +12,97 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import { FloatingWhatsApp } from "@/components/floating-whatsapp"
+// Removed: import { ImageModal } from "@/components/ui/image-modal"
 
 export default function HomePage() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  const realisationImages = [
+    "/realisation/1 (1).jpg",
+    "/realisation/1 (2).jpg",
+    "/realisation/1 (3).jpg",
+    "/realisation/1 (4).jpg",
+    "/realisation/1 (5).jpg",
+    "/realisation/1 (6).jpg",
+    "/realisation/1 (7).jpg",
+    "/realisation/1 (8).jpg",
+    "/realisation/1 (9).jpg",
+    "/realisation/1 (10).jpg",
+  ]
+
+  // Removed: const openModal = (index: number) => { ... }
+  // Removed: const closeModal = () => { ... }
+  // Removed: const navigateImages = (direction: "prev" | "next") => { ... }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Handle form submission
     alert("Merci pour votre message ! Nous vous recontacterons rapidement.")
   }
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false)
+  }
+
   return (
     <main className="min-h-screen">
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm md:hidden" onClick={closeMobileMenu}>
+          <div
+            className="fixed right-0 top-0 h-full w-2/3 bg-background shadow-lg p-6 animate-in slide-in-from-right duration-300"
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the drawer
+          >
+            <button onClick={closeMobileMenu} className="absolute top-4 right-4 p-2 rounded-full bg-muted hover:bg-muted-foreground/20">
+              <X className="w-6 h-6" />
+            </button>
+            <nav className="flex flex-col space-y-6 mt-12">
+              <a href="#services" onClick={closeMobileMenu} className="text-2xl font-bold text-foreground hover:text-primary transition-colors">
+                Services
+              </a>
+              <a href="#why-choose-us" onClick={closeMobileMenu} className="text-2xl font-bold text-foreground hover:text-primary transition-colors">
+                Pourquoi nous
+              </a>
+              <a href="#realisations" onClick={closeMobileMenu} className="text-2xl font-bold text-foreground hover:text-primary transition-colors">
+                Réalisations
+              </a>
+              <a href="#about" onClick={closeMobileMenu} className="text-2xl font-bold text-foreground hover:text-primary transition-colors">
+                À propos
+              </a>
+              <a href="#contact" onClick={closeMobileMenu} className="text-2xl font-bold text-foreground hover:text-primary transition-colors">
+                Contact
+              </a>
+              <WhatsAppButton size="lg" className="w-full mt-8" onClick={closeMobileMenu} />
+            </nav>
+          </div>
+        </div>
+      )}
+
       {/* Navigation */}
       <nav className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-3">
-              <Image src="/images/logo.png" alt="Clean Auto Services" width={40} height={40} className="rounded-lg" />
-              <div>
+              <Image src="/images/logo.png" alt="Clean Auto Services" width={60} height={60} className="rounded-lg md:w-10 md:h-10" />
+              {/* <div>
                 <h1 className="font-bold text-lg text-primary">Clean Auto Services</h1>
                 <p className="text-xs text-muted-foreground">Nettoyage intérieur voiture</p>
-              </div>
+              </div> */}
             </div>
+            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-6">
               <a href="#services" className="text-foreground hover:text-secondary transition-colors">
                 Services
+              </a>
+              <a href="#why-choose-us" className="text-foreground hover:text-secondary transition-colors">
+                Pourquoi nous
+              </a>
+              <a href="#realisations" className="text-foreground hover:text-secondary transition-colors">
+                Réalisations
               </a>
               <a href="#about" className="text-foreground hover:text-secondary transition-colors">
                 À propos
@@ -43,6 +111,12 @@ export default function HomePage() {
                 Contact
               </a>
               <WhatsAppButton size="sm" />
+            </div>
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <Button variant="ghost" size="icon" onClick={toggleMobileMenu} aria-label="Ouvrir le menu mobile">
+                <Menu className="w-6 h-6" />
+              </Button>
             </div>
           </div>
         </div>
@@ -56,7 +130,7 @@ export default function HomePage() {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-secondary/5 rounded-full blur-3xl animate-pulse delay-500"></div>
         </div>
         <div className="absolute inset-0 bg-[url('/clean-car-interior-with-water-droplets-and-profess.jpg')] bg-cover bg-center opacity-10"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
           <div className="max-w-3xl">
             <div className="flex items-center space-x-2 mb-6">
@@ -67,13 +141,13 @@ export default function HomePage() {
                 Service professionnel
               </span>
             </div>
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-balance leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-balance leading-tight">
               Nettoyage intérieur voiture <span className="text-secondary">à domicile</span>
             </h1>
-            <p className="text-xl lg:text-2xl mb-6 text-primary-foreground/90 text-pretty font-medium">
+            <p className="text-lg md:text-xl lg:text-2xl mb-6 text-primary-foreground/90 text-pretty font-medium">
               Sarlat-la-Canéda et dans un rayon de 30 km
             </p>
-            <p className="text-lg mb-10 text-primary-foreground/80 max-w-2xl text-pretty leading-relaxed">
+            <p className="text-base md:text-lg mb-10 text-primary-foreground/80 max-w-2xl text-pretty leading-relaxed">
               Service haut de gamme adapté à tous types de véhicules. Intervention rapide et professionnelle directement
               chez vous avec un équipement professionnel de dernière génération.
             </p>
@@ -100,24 +174,172 @@ export default function HomePage() {
       <section className="bg-gradient-to-r from-secondary via-secondary to-secondary/90 text-secondary-foreground py-8 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-8 text-center md:text-left">
-            <div className="flex items-center space-x-3 hover:scale-105 transition-transform duration-300">
-              <div className="bg-secondary-foreground/10 p-3 rounded-full">
+            <div className="flex items-center space-x-3 hover:scale-100 transition-transform duration-300">
+              <div className="bg-secondary/10 p-3 rounded-full">
                 <MapPin className="w-5 h-5" />
               </div>
               <span className="font-semibold text-lg">Sarlat-la-Canéda + 30 km</span>
             </div>
-            <div className="flex items-center space-x-3 hover:scale-105 transition-transform duration-300">
-              <div className="bg-secondary-foreground/10 p-3 rounded-full">
+            <div className="flex items-center space-x-3 hover:scale-100 transition-transform duration-300">
+              <div className="bg-secondary/10 p-3 rounded-full">
                 <Phone className="w-5 h-5" />
               </div>
               <a href="tel:0650334116" className="font-semibold hover:underline text-xl">
                 06 50 33 41 16
               </a>
             </div>
-            <div className="text-sm bg-secondary-foreground/5 px-4 py-2 rounded-full">
+            <div className="text-sm xs:text-base bg-secondary/10 px-4 py-2 rounded-full">
               <span className="font-semibold">Intervention rapide</span> •{" "}
               <span className="font-medium">Service professionnel</span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pourquoi nous choisir Section */}
+      <section id="why-choose-us" className="py-24 bg-gradient-to-b from-muted/30 via-background to-muted/20 relative">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 right-1/4 w-24 h-24 bg-secondary rounded-full blur-2xl animate-pulse"></div>
+          <div className="absolute bottom-10 left-1/4 w-32 h-32 bg-primary rounded-full blur-2xl animate-pulse delay-700"></div>
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 md:mb-20">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-balance">Pourquoi nous ?</h2>
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed">
+              Faites confiance à Clean Auto Services pour un nettoyage impeccable et un service client irréprochable.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <Card className="relative hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <CardContent className="flex flex-col items-center text-center p-4 sm:p-6">
+                <div className="bg-[#05BAC4]/10 p-3 rounded-full mb-4">
+                  <Sparkles className="w-6 h-6 text-[#05BAC4]" />
+                </div>
+                <h3 className="text-lg font-semibold">Lavage professionnel à domicile</h3>
+                <p className="text-sm text-muted-foreground mt-2">Service expert directement chez vous</p>
+              </CardContent>
+            </Card>
+
+            <Card className="relative hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <CardContent className="flex flex-col items-center text-center p-6">
+                <div className="bg-[#05BAC4]/10 p-3 rounded-full mb-4">
+                  <Shield className="w-6 h-6 text-[#05BAC4]" />
+                </div>
+                <h3 className="text-lg font-semibold">Produits de qualité et respectueux des matériaux</h3>
+                <p className="text-sm text-muted-foreground mt-2">Pour un intérieur protégé et éclatant</p>
+              </CardContent>
+            </Card>
+
+            <Card className="relative hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <CardContent className="flex flex-col items-center text-center p-6">
+                <div className="bg-[#05BAC4]/10 p-3 rounded-full mb-4">
+                  <Check className="w-6 h-6 text-[#05BAC4]" />
+                </div>
+                <h3 className="text-lg font-semibold">Finition impeccable et souci du détail</h3>
+                <p className="text-sm text-muted-foreground mt-2">Chaque recoin de votre véhicule traité avec soin</p>
+              </CardContent>
+            </Card>
+
+            <Card className="relative hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <CardContent className="flex flex-col items-center text-center p-6">
+                <div className="bg-[#05BAC4]/10 p-3 rounded-full mb-4">
+                  <Clock className="w-6 h-6 text-[#05BAC4]" />
+                </div>
+                <h3 className="text-lg font-semibold">Intervention rapide pour particuliers et professionnels</h3>
+                <p className="text-sm text-muted-foreground mt-2">Flexibilité et efficacité pour tous vos besoins</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Interior Refresh Section */}
+      <section className="py-16 md:py-24 bg-gradient-to-r from-background via-muted/10 to-background relative">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="relative">
+              <div className="aspect-square rounded-2xl overflow-hidden bg-muted shadow-xl">
+                <Image
+                  src="/image.jpg"
+                  alt="Nettoyage intérieur voiture à la vapeur"
+                  width={600}
+                  height={600}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-[#05BAC4]/20 rounded-full blur-3xl animate-blob"></div>
+            </div>
+            <div>
+              <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-balance">
+                Offrez une seconde jeunesse à l’intérieur de votre voiture !
+              </h2>
+              <p className="text-base md:text-lg text-muted-foreground mb-6 text-pretty">
+                Nos prestations complètes garantissent un habitacle impeccable, du sol au plafond, avec un souci du
+                détail inégalé.
+              </p>
+              <ul className="space-y-3 sm:space-y-4 mb-8">
+                <li className="flex items-start space-x-3">
+                  <div className="bg-[#05BAC4]/10 p-2 rounded-full mt-0.5 flex-shrink-0">
+                    <Check className="w-4 h-4 text-[#05BAC4]" />
+                  </div>
+                  <span className="text-base md:text-lg leading-relaxed">Aspiration complète (moquettes, sièges, coffres, tapis)</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <div className="bg-[#05BAC4]/10 p-2 rounded-full mt-0.5 flex-shrink-0">
+                    <Check className="w-4 h-4 text-[#05BAC4]" />
+                  </div>
+                  <span className="text-base md:text-lg leading-relaxed">Nettoyage et détachage des tissus et cuirs</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <div className="bg-[#05BAC4]/10 p-2 rounded-full mt-0.5 flex-shrink-0">
+                    <Check className="w-4 h-4 text-[#05BAC4]" />
+                  </div>
+                  <span className="text-base md:text-lg leading-relaxed">Rénovation des plastiques et tableau de bord</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <div className="bg-[#05BAC4]/10 p-2 rounded-full mt-0.5 flex-shrink-0">
+                    <Check className="w-4 h-4 text-[#05BAC4]" />
+                  </div>
+                  <span className="text-base md:text-lg leading-relaxed">Nettoyage des pédales, seuils de portes et zones difficiles d’accès</span>
+                </li>
+              </ul>
+              <p className="text-lg md:text-xl font-semibold text-foreground">
+                Le résultat ? Un habitacle propre, désinfecté et rafraîchi — <span className="text-[#05BAC4]">comme neuf !</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Réalisations Section */}
+      <section id="realisations" className="py-24 bg-gradient-to-b from-muted/30 via-background to-muted/20 relative">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 left-1/4 w-24 h-24 bg-[#05BAC4] rounded-full blur-2xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-1/4 w-32 h-32 bg-primary rounded-full blur-2xl animate-pulse delay-700"></div>
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-balance">Nos Réalisations</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed">
+              Découvrez notre travail de nettoyage automobile avec ces exemples avant et après intervention.
+            </p>
+          </div>
+
+          <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
+            {realisationImages.map((src, index) => (
+              <div
+                key={index}
+                className="flex-none w-48 h-64 md:w-64 md:h-80 relative rounded-lg shadow-md overflow-hidden bg-muted transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              >
+                <Image
+                  src={src}
+                  alt={`Réalisation image ${index + 1}`}
+                  layout="fill"
+                  objectFit="contain"
+                  className="p-2"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -325,19 +547,19 @@ export default function HomePage() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-gradient-to-r from-background via-muted/10 to-background relative">
+      <section id="about" className="py-16 md:py-20 bg-gradient-to-r from-background via-muted/10 to-background relative">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-1/4 right-10 w-40 h-40 bg-secondary rounded-full blur-3xl"></div>
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-balance">À propos de Clean Auto Services</h2>
-              <p className="text-lg text-muted-foreground mb-6 text-pretty">
+              <p className="text-base md:text-lg text-muted-foreground mb-6 text-pretty">
                 Clean Auto Services, spécialiste du nettoyage intérieur automobile à domicile, propose des services haut
                 de gamme adaptés à tous types de véhicules. Intervention à Sarlat-la-Canéda et jusqu'à 30 km autour.
               </p>
-              <div className="grid sm:grid-cols-2 gap-6 mb-8">
+              <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mb-8">
                 <div className="flex items-start space-x-3">
                   <div className="bg-secondary/10 p-2 rounded-lg">
                     <Star className="w-5 h-5 text-secondary" />
@@ -615,6 +837,7 @@ export default function HomePage() {
       </footer>
 
       <FloatingWhatsApp />
+      {/* Removed: <ImageModal ... /> */}
     </main>
   )
 }
