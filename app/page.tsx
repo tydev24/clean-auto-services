@@ -18,16 +18,18 @@ export default function HomePage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const realisationImages = [
-    "/realisation/1 (1).jpg",
-    "/realisation/1 (2).jpg",
-    "/realisation/1 (3).jpg",
-    "/realisation/1 (4).jpg",
-    "/realisation/1 (5).jpg",
-    "/realisation/1 (6).jpg",
-    "/realisation/1 (7).jpg",
-    "/realisation/1 (8).jpg",
-    "/realisation/1 (9).jpg",
-    "/realisation/1 (10).jpg",
+    "/realisation/avant1.jpg",
+    "/realisation/apres1.jpg",
+    "/realisation/avant2.jpg",
+    "/realisation/apres2.jpg",
+    "/realisation/avant3.jpg",
+    "/realisation/apres3.jpg",
+    "/realisation/avant4.jpg",
+    "/realisation/apres4.jpg",
+    "/realisation/avant5.jpg",
+    "/realisation/apres5.jpg",
+    "/realisation/avant6.jpg",
+    "/realisation/apres6.jpg",
   ]
 
   // Removed: const openModal = (index: number) => { ... }
@@ -36,8 +38,21 @@ export default function HomePage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    alert("Merci pour votre message ! Nous vous recontacterons rapidement.")
+    const form = e.currentTarget as HTMLFormElement
+    const name = (form.elements.namedItem("name") as HTMLInputElement).value
+    const phone = (form.elements.namedItem("phone") as HTMLInputElement).value
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value
+
+    const whatsappMessage = `*Demande de contact Clean Auto Services*%0A%0A` +
+                            `*Nom:* ${name}%0A` +
+                            `*Téléphone:* ${phone}%0A` +
+                            `*Email:* ${email}%0A` +
+                            `*Message:* ${message}%0A%0A` +
+                            `Merci de me recontacter.`
+
+    const whatsappUrl = `https://wa.me/33650334116?text=${whatsappMessage}`
+    window.open(whatsappUrl, "_blank")
   }
 
   const toggleMobileMenu = () => {
@@ -329,7 +344,7 @@ export default function HomePage() {
             {realisationImages.map((src, index) => (
               <div
                 key={index}
-                className="flex-none w-48 h-64 md:w-64 md:h-80 relative rounded-lg shadow-md overflow-hidden bg-muted transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                className="flex-none w-48 h-64 md:w-64 md:h-80 relative rounded-xl border-2 border-border/70 shadow-lg overflow-hidden bg-muted transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
               >
                 <Image
                   src={src}
@@ -584,7 +599,7 @@ export default function HomePage() {
             <div className="relative">
               <div className="aspect-square rounded-2xl overflow-hidden bg-muted">
                 <Image
-                  src="/professional-car-interior-cleaning-service-with-mo.jpg"
+                  src="/image a propos.jpg"
                   alt="Service professionnel de nettoyage automobile"
                   width={500}
                   height={500}
@@ -699,22 +714,22 @@ export default function HomePage() {
       </section>
 
       {/* Location Section */}
-      <section className="py-20 bg-gradient-to-l from-background via-muted/10 to-background relative">
+      <section className="py-16 md:py-20 bg-gradient-to-l from-background via-muted/10 to-background relative">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-1/3 left-10 w-32 h-32 bg-secondary rounded-full blur-3xl"></div>
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-balance">Notre zone d'intervention</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed">
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed">
               Disponible à Sarlat-la-Canéda et dans un rayon de 30 km pour votre service à domicile.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <h3 className="text-xl font-semibold mb-6">Villes desservies</h3>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <div className="space-y-2">
                   <p className="font-medium">• Sarlat-la-Canéda</p>
                   <p className="font-medium">• Domme</p>
@@ -762,18 +777,18 @@ export default function HomePage() {
           <div className="absolute top-10 left-1/3 w-24 h-24 bg-secondary rounded-full blur-2xl animate-pulse"></div>
           <div className="absolute bottom-10 right-1/3 w-32 h-32 bg-secondary rounded-full blur-2xl animate-pulse delay-1000"></div>
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <div className="grid md:grid-cols-4 gap-8">
             {/* Company Info */}
             <div className="md:col-span-2">
               <div className="flex items-center space-x-3 mb-4">
-                <Image src="/images/logo.png" alt="Clean Auto Services" width={40} height={40} className="rounded-lg" />
+                <Image src="/images/logo.png" alt="Clean Auto Services" width={60} height={60} className="rounded-lg md:w-10 md:h-10" />
                 <div>
                   <h3 className="font-bold text-lg">Clean Auto Services</h3>
                   <p className="text-sm text-primary-foreground/80">Nettoyage intérieur voiture</p>
                 </div>
               </div>
-              <p className="text-primary-foreground/80 mb-4 max-w-md">
+              <p className="text-sm text-primary-foreground/80 mb-4 max-w-md">
                 Spécialiste du nettoyage intérieur automobile à domicile. Service professionnel et haut de gamme à
                 Sarlat-la-Canéda et dans un rayon de 30 km.
               </p>
@@ -798,11 +813,11 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold mb-4">Nos services</h4>
               <ul className="space-y-2 text-sm text-primary-foreground/80">
-                <li>Pack Éco</li>
-                <li>Pack Confort</li>
-                <li>Pack Premium</li>
-                <li>Service à domicile</li>
-                <li>Intervention rapide</li>
+                <li><a href="#services" className="hover:text-secondary transition-colors">Pack Éco</a></li>
+                <li><a href="#services" className="hover:text-secondary transition-colors">Pack Confort</a></li>
+                <li><a href="#services" className="hover:text-secondary transition-colors">Pack Premium</a></li>
+                <li><a href="#services" className="hover:text-secondary transition-colors">Service à domicile</a></li>
+                <li><a href="#services" className="hover:text-secondary transition-colors">Intervention rapide</a></li>
               </ul>
             </div>
 
@@ -828,9 +843,9 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="border-t border-primary-foreground/20 mt-12 pt-8 text-center">
-            <p className="text-sm text-primary-foreground/60">
-              © 2025 Clean Auto Services. Tous droits réservés. | Service de nettoyage automobile professionnel
+          <div className="border-t border-primary-foreground/20 mt-10 pt-8 text-center">
+            <p className="text-xs text-primary-foreground/60">
+              © {new Date().getFullYear()} Clean Auto Services. Tous droits réservés. | Service de nettoyage automobile professionnel
             </p>
           </div>
         </div>
