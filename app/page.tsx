@@ -12,10 +12,29 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import { FloatingWhatsApp } from "@/components/floating-whatsapp"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 // Removed: import { ImageModal } from "@/components/ui/image-modal"
 
 export default function HomePage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  const autoImages = [
+    "/imgauto/1.jpg",
+    "/imgauto/2.jpg",
+    "/imgauto/3.jpg",
+    "/imgauto/4.jpg",
+    "/imgauto/5.jpg",
+    "/imgauto/6.jpg",
+    "/imgauto/7.jpg",
+    "/imgauto/8.jpg",
+    "/imgauto/9.jpg",
+  ]
 
   const realisationImages = [
     "/realisation/avant1.jpg",
@@ -156,15 +175,15 @@ export default function HomePage() {
                 Service professionnel
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-balance leading-tight">
-              Nettoyage intérieur voiture <span className="text-secondary">à domicile</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-balance leading-tight">
+              Nettoyage intérieur voiture <span className="text-secondary">à domicile ou sur lieu de travail</span>
             </h1>
-            <p className="text-lg md:text-xl lg:text-2xl mb-6 text-primary-foreground/90 text-pretty font-medium">
-              Sarlat-la-Canéda et dans un rayon de 30 km
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 text-primary-foreground/90 text-pretty font-medium">
+              Perpignan et ses alentours
             </p>
-            <p className="text-base md:text-lg mb-10 text-primary-foreground/80 max-w-2xl text-pretty leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg mb-10 text-primary-foreground/80 max-w-2xl text-pretty leading-relaxed">
               Service haut de gamme adapté à tous types de véhicules. Intervention rapide et professionnelle directement
-              chez vous avec un équipement professionnel de dernière génération.
+              chez vous ou sur votre lieu de travail avec un équipement professionnel de dernière génération.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <WhatsAppButton
@@ -193,7 +212,7 @@ export default function HomePage() {
               <div className="bg-secondary/10 p-3 rounded-full">
                 <MapPin className="w-5 h-5" />
               </div>
-              <span className="font-semibold text-lg">Sarlat-la-Canéda + 30 km</span>
+              <span className="font-semibold text-lg">Perpignan et ses alentours</span>
             </div>
             <div className="flex items-center space-x-3 hover:scale-100 transition-transform duration-300">
               <div className="bg-secondary/10 p-3 rounded-full">
@@ -230,8 +249,8 @@ export default function HomePage() {
                 <div className="bg-[#05BAC4]/10 p-3 rounded-full mb-4">
                   <Sparkles className="w-6 h-6 text-[#05BAC4]" />
                 </div>
-                <h3 className="text-lg font-semibold">Lavage professionnel à domicile</h3>
-                <p className="text-sm text-muted-foreground mt-2">Service expert directement chez vous</p>
+                <h3 className="text-lg font-semibold">Lavage professionnel à domicile ou au travail</h3>
+                <p className="text-sm text-muted-foreground mt-2">Service expert directement chez vous ou sur votre lieu d'activité</p>
               </CardContent>
             </Card>
 
@@ -275,8 +294,8 @@ export default function HomePage() {
             <div className="relative">
               <div className="aspect-square rounded-2xl overflow-hidden bg-muted shadow-xl">
                 <Image
-                  src="/image.jpg"
-                  alt="Nettoyage intérieur voiture à la vapeur"
+                  src="/interior-refresh.png"
+                  alt="Nettoyage professionnel des sièges de voiture"
                   width={600}
                   height={600}
                   className="w-full h-full object-cover"
@@ -333,28 +352,123 @@ export default function HomePage() {
           <div className="absolute bottom-20 right-1/4 w-32 h-32 bg-primary rounded-full blur-2xl animate-pulse delay-700"></div>
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-balance">Nos Réalisations</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed">
-              Découvrez notre travail de nettoyage automobile avec ces exemples avant et après intervention.
+          <div className="text-center mb-12 md:mb-20">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-balance">Nos Réalisations</h2>
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed">
+              Découvrez notre travail de nettoyage automobile avec nos dernières interventions.
             </p>
           </div>
 
-          <div className="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide">
-            {realisationImages.map((src, index) => (
-              <div
-                key={index}
-                className="flex-none w-48 h-64 md:w-64 md:h-80 relative rounded-xl border-2 border-border/70 shadow-lg overflow-hidden bg-muted transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
-              >
-                <Image
-                  src={src}
-                  alt={`Réalisation image ${index + 1}`}
-                  layout="fill"
-                  objectFit="contain"
-                  className="p-2"
-                />
+          <div className="space-y-16 md:space-y-32">
+            {/* Auto Gallery - Premium Carousel */}
+            <div>
+              <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-4">
+                <div>
+                  <h3 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4 flex items-center">
+                    <div className="bg-[#05BAC4]/10 p-2 rounded-xl mr-3 md:mr-4">
+                      <Car className="w-6 h-6 md:w-8 md:h-8 text-[#05BAC4]" />
+                    </div>
+                    Interventions Récentes
+                  </h3>
+                  <p className="text-muted-foreground text-sm md:text-lg max-w-xl">
+                    Chaque véhicule est traité avec le plus grand soin. Découvrez le résultat de nos dernières interventions.
+                  </p>
+                </div>
               </div>
-            ))}
+
+              <div className="relative px-0 md:px-12">
+                <Carousel
+                  opts={{
+                    align: "start",
+                    loop: true,
+                  }}
+                  className="w-full"
+                >
+                  <CarouselContent className="-ml-2 md:-ml-4">
+                    {autoImages.map((src, index) => (
+                      <CarouselItem key={index} className="pl-2 md:pl-4 basis-[85%] sm:basis-1/2 lg:basis-1/3">
+                        <div className="group relative aspect-[4/5] rounded-2xl md:rounded-3xl overflow-hidden bg-muted shadow-lg md:shadow-2xl transition-all duration-500">
+                          <Image
+                            src={src}
+                            alt={`Réalisation Auto ${index + 1}`}
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500"></div>
+                          <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-8 translate-y-2 md:translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <Badge className="w-fit mb-2 md:mb-3 bg-[#05BAC4] text-white border-none text-[10px] md:text-xs">
+                              Service Premium
+                            </Badge>
+                            <h4 className="text-white text-lg md:text-xl font-bold">Nettoyage Intérieur</h4>
+                            <p className="text-white/70 text-[10px] md:text-sm mt-1 md:mt-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                              Restauration complète
+                            </p>
+                          </div>
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious className="hidden md:flex -left-4 bg-background/80 backdrop-blur shadow-xl hover:bg-[#05BAC4] hover:text-white transition-all border-none size-12" />
+                  <CarouselNext className="hidden md:flex -right-4 bg-background/80 backdrop-blur shadow-xl hover:bg-[#05BAC4] hover:text-white transition-all border-none size-12" />
+                </Carousel>
+              </div>
+            </div>
+
+            {/* Before/After Gallery - Side by Side Comparison */}
+            <div>
+              <div className="text-center mb-10 md:mb-16">
+                <h3 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4 flex items-center justify-center">
+                  <div className="bg-[#05BAC4]/10 p-2 rounded-xl mr-3 md:mr-4">
+                    <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-[#05BAC4]" />
+                  </div>
+                  Galerie Avant / Après
+                </h3>
+                <p className="text-muted-foreground text-sm md:text-lg max-w-2xl mx-auto px-4">
+                  Visualisez l'efficacité de nos techniques de nettoyage en profondeur.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+                {[0, 2, 4, 6, 8, 10].map((startIndex) => (
+                  <div key={startIndex} className="space-y-4 md:space-y-6 group px-4 md:px-0">
+                    <div className="relative flex flex-row gap-2 sm:gap-4 aspect-[16/9] sm:aspect-auto">
+                      {/* Avant */}
+                      <div className="relative flex-1 aspect-square sm:aspect-[4/3] rounded-xl md:rounded-2xl overflow-hidden shadow-md border border-border/50">
+                        <Image
+                          src={realisationImages[startIndex]}
+                          alt="Avant"
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute top-2 left-2 md:top-4 md:left-4">
+                          <Badge className="bg-black/70 backdrop-blur-md text-white border-none font-bold uppercase tracking-widest text-[8px] md:text-[10px] px-1.5 md:px-2">
+                            Avant
+                          </Badge>
+                        </div>
+                      </div>
+                      {/* Après */}
+                      <div className="relative flex-1 aspect-square sm:aspect-[4/3] rounded-xl md:rounded-2xl overflow-hidden shadow-lg border-2 border-[#05BAC4]/30">
+                        <Image
+                          src={realisationImages[startIndex + 1]}
+                          alt="Après"
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute top-2 right-2 md:top-4 md:right-4">
+                          <Badge className="bg-[#05BAC4] text-white border-none font-bold uppercase tracking-widest text-[8px] md:text-[10px] px-1.5 md:px-2">
+                            Après
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-left px-1">
+                      <h5 className="font-bold text-base md:text-lg group-hover:text-[#05BAC4] transition-colors leading-tight">Restauration textiles & plastiques</h5>
+                      <p className="text-muted-foreground text-[10px] md:text-sm">Intervention professionnelle à domicile</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -370,11 +484,11 @@ export default function HomePage() {
           <div className="text-center mb-20">
             <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-balance">Nos packs de nettoyage</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed">
-              Choisissez le service adapté à vos besoins. Tous nos packs incluent un service à domicile professionnel.
+              Choisissez le service adapté à vos besoins. Tous nos packs incluent un service à domicile ou sur lieu de travail professionnel.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {/* Pack Éco */}
             <Card className="relative border-2 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
               <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
@@ -452,7 +566,7 @@ export default function HomePage() {
                   <div className="space-y-2">
                     <div className="flex justify-between items-center py-1">
                       <span className="text-sm text-muted-foreground font-medium">Citadine</span>
-                      <span className="font-bold text-xl text-secondary">75€</span>
+                      <span className="font-bold text-xl text-secondary">80€</span>
                     </div>
                     <div className="flex justify-between items-center py-1">
                       <span className="text-sm text-muted-foreground font-medium">Berline</span>
@@ -517,6 +631,10 @@ export default function HomePage() {
                       <span className="text-sm text-muted-foreground font-medium">SUV/Monospace</span>
                       <span className="font-bold text-xl text-secondary">140€</span>
                     </div>
+                    <div className="flex justify-between items-center py-1">
+                      <span className="text-sm text-muted-foreground font-medium">Utilitaire</span>
+                      <span className="font-bold text-xl text-secondary text-right">à partir de 150€</span>
+                    </div>
                   </div>
                 </div>
 
@@ -543,6 +661,52 @@ export default function HomePage() {
                 <WhatsAppButton className="w-full font-semibold" />
               </CardContent>
             </Card>
+
+            {/* Traitement des sièges */}
+            <Card className="relative border-2 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
+              <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
+              <CardHeader className="text-center pb-4 relative z-10">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="bg-secondary/10 p-3 rounded-full group-hover:bg-secondary/20 transition-colors duration-300">
+                    <Sparkles className="w-8 h-8 text-secondary" />
+                  </div>
+                </div>
+                <CardTitle className="text-2xl font-bold">Traitement des sièges</CardTitle>
+                <CardDescription className="text-base">Soin spécifique</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="text-center space-y-3">
+                  <div className="space-y-2">
+                    <div className="flex justify-center items-center py-4">
+                      <span className="font-bold text-4xl text-secondary">50€</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h4 className="font-bold text-sm uppercase tracking-wider text-muted-foreground border-b pb-2">
+                    Inclus
+                  </h4>
+                  <ul className="space-y-3">
+                    {[
+                      "Nettoyage en profondeur des sièges",
+                      "Traitement tissus et cuirs",
+                      "Élimination des taches tenaces",
+                      "Soin et protection",
+                    ].map((service, index) => (
+                      <li key={index} className="flex items-start space-x-3">
+                        <div className="bg-secondary/10 p-1 rounded-full mt-0.5">
+                          <Check className="w-3 h-3 text-secondary" />
+                        </div>
+                        <span className="text-sm leading-relaxed">{service}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <WhatsAppButton className="w-full font-semibold" />
+              </CardContent>
+            </Card>
           </div>
 
           {/* Additional Info */}
@@ -553,10 +717,16 @@ export default function HomePage() {
               </div>
               Suppléments possibles
             </h3>
-            <p className="text-muted-foreground text-lg">
-              Sable, boue, poils d'animaux :{" "}
-              <span className="font-bold text-foreground text-xl text-secondary">+10€</span>
-            </p>
+            <div className="space-y-2">
+              <p className="text-muted-foreground text-lg">
+                Sable, boue, poils d'animaux :{" "}
+                <span className="font-bold text-foreground text-xl text-secondary">+10€</span>
+              </p>
+              <p className="text-muted-foreground text-lg">
+                <span className="text-secondary font-bold">⚠️ Véhicules de chantier ou très encrassés :</span>{" "}
+                supplément possible selon l'état.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -571,8 +741,8 @@ export default function HomePage() {
             <div>
               <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-balance">À propos de Clean Auto Services</h2>
               <p className="text-base md:text-lg text-muted-foreground mb-6 text-pretty">
-                Clean Auto Services, spécialiste du nettoyage intérieur automobile à domicile, propose des services haut
-                de gamme adaptés à tous types de véhicules. Intervention à Sarlat-la-Canéda et jusqu'à 30 km autour.
+                Clean Auto Services, spécialiste du nettoyage intérieur automobile à domicile ou sur lieu de travail, propose des services haut
+                de gamme adaptés à tous types de véhicules. Intervention à Perpignan et ses alentours.
               </p>
               <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mb-8">
                 <div className="flex items-start space-x-3">
@@ -621,7 +791,7 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-balance">Réservez votre intervention</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              Contactez-nous pour réserver votre nettoyage automobile à domicile ou pour toute question.
+              Contactez-nous pour réserver votre nettoyage automobile à domicile ou sur lieu de travail, ou pour toute question.
             </p>
           </div>
 
@@ -648,7 +818,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <p className="font-medium">Zone d'intervention</p>
-                      <p className="text-muted-foreground">Sarlat-la-Canéda et dans un rayon de 30 km</p>
+                      <p className="text-muted-foreground">Perpignan et ses alentours</p>
                     </div>
                   </div>
                 </div>
@@ -722,7 +892,7 @@ export default function HomePage() {
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-balance">Notre zone d'intervention</h2>
             <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto text-pretty leading-relaxed">
-              Disponible à Sarlat-la-Canéda et dans un rayon de 30 km pour votre service à domicile.
+              Disponible à Perpignan et ses alentours pour votre service à domicile.
             </p>
           </div>
 
@@ -731,23 +901,43 @@ export default function HomePage() {
               <h3 className="text-xl font-semibold mb-6">Villes desservies</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <div className="space-y-2">
-                  <p className="font-medium">• Sarlat-la-Canéda</p>
-                  <p className="font-medium">• Domme</p>
-                  <p className="font-medium">• La Roque-Gageac</p>
-                  <p className="font-medium">• Beynac-et-Cazenac</p>
-                  <p className="font-medium">• Castelnaud-la-Chapelle</p>
+                  <p className="font-medium">• Perpignan</p>
+                  <p className="font-medium">• Canet-en-Roussillon</p>
+                  <p className="font-medium">• Saint-Estève</p>
+                  <p className="font-medium">• Cabestany</p>
+                  <p className="font-medium">• Bompas</p>
+                  <p className="font-medium">• Pia</p>
+                  <p className="font-medium">• Rivesaltes</p>
+                  <p className="font-medium">• Le Barcarès</p>
+                  <p className="font-medium">• Torreilles</p>
+                  <p className="font-medium">• Claira</p>
+                  <p className="font-medium">• Saint-Laurent-de-la-Salanque</p>
+                  <p className="font-medium">• Saleilles</p>
+                  <p className="font-medium">• Villeneuve-de-la-Raho</p>
                 </div>
                 <div className="space-y-2">
-                  <p className="font-medium">• Vitrac</p>
-                  <p className="font-medium">• Cénac-et-Saint-Julien</p>
+                  <p className="font-medium">• Pollestres</p>
+                  <p className="font-medium">• Baho</p>
+                  <p className="font-medium">• Toulouges</p>
+                  <p className="font-medium">• Le Soler</p>
+                  <p className="font-medium">• Thuir</p>
+                  <p className="font-medium">• Elne</p>
+                  <p className="font-medium">• Argelès-sur-Mer</p>
                   <p className="font-medium">• Saint-Cyprien</p>
-                  <p className="font-medium">• Belvès</p>
+                  <p className="font-medium">• Collioure</p>
+                  <p className="font-medium">• Banyuls-sur-Mer</p>
+                  <p className="font-medium">• Estagel</p>
+                  <p className="font-medium">• Baixas</p>
+                  <p className="font-medium">• Espira-de-l’Agly</p>
+                  <p className="font-medium">• Peyrestortes</p>
+                  <p className="font-medium">• Cases-de-Pène</p>
+                  <p className="font-medium">• Tautavel</p>
                   <p className="font-medium">• Et bien d'autres...</p>
                 </div>
               </div>
               <div className="mt-6 p-4 bg-secondary/10 rounded-lg">
                 <p className="text-sm text-muted-foreground">
-                  <strong>Zone d'intervention :</strong> Dans un rayon de 30 km autour de Sarlat-la-Canéda.
+                  <strong>Zone d'intervention :</strong> Perpignan et ses alentours.
                   Contactez-nous pour vérifier si votre commune est desservie.
                 </p>
               </div>
@@ -756,7 +946,7 @@ export default function HomePage() {
             <div className="relative">
               <div className="aspect-video rounded-lg overflow-hidden bg-muted border">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46234.89234567!2d1.2167!3d44.8889!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12ac0e8b8b8b8b8b%3A0x8b8b8b8b8b8b8b8b!2sSarlat-la-Can%C3%A9da!5e0!3m2!1sfr!2sfr!4v1234567890"
+                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46797.1086052!2d2.8631!3d42.6986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12b06e49f7b0f3b%3A0x40a5fb99a3f4e!2sPerpignan!5e0!3m2!1sfr!2sfr!4v1234567890"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -790,7 +980,7 @@ export default function HomePage() {
               </div>
               <p className="text-sm text-primary-foreground/80 mb-4 max-w-md">
                 Spécialiste du nettoyage intérieur automobile à domicile. Service professionnel et haut de gamme à
-                Sarlat-la-Canéda et dans un rayon de 30 km.
+                Perpignan et ses alentours.
               </p>
               <div className="flex space-x-4">
                 <WhatsAppButton
@@ -845,7 +1035,7 @@ export default function HomePage() {
 
           <div className="border-t border-primary-foreground/20 mt-10 pt-8 text-center">
             <p className="text-xs text-primary-foreground/60">
-              © {new Date().getFullYear()} Clean Auto Services. Tous droits réservés. | Service de nettoyage automobile professionnel
+              © {new Date().getFullYear()} Clean Auto Services. Tous droits réservés. | Réalisé par <a href="https://ty-dev.site" target="_blank" rel="noopener noreferrer" className="hover:text-secondary transition-colors underline decoration-secondary/30 underline-offset-4">TY DEV</a>
             </p>
           </div>
         </div>
